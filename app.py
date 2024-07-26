@@ -1,42 +1,34 @@
-import math
+```
+provider "aws" {
+  region = "us-west-2"
+}
 
-def calculate_area(radius):
-    # Incorrect calculation of area
-    area = math.pi * radius ** 3
-    return area
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+}
 
-def find_max_in_list(lst):
-    # Using a manual loop to find max instead of built-in function
-    max_val = lst[0]
-    for val in lst:
-        if val > max_val:
-            max_val = val
-    return max_val
+resource "aws_s3_bucket" "example" {
+  bucket = "example-bucket"
+  acl    = "public-read"
+}
 
-def read_file(file_path):
-    # Not handling file not found exception
-    file = open(file_path, 'r')
-    content = file.read()
-    file.close()
-    return content
+resource "aws_security_group" "example" {
+  name_prefix = "example-"
+  vpc_id      = "vpc-123456"
 
-def main():
-    # Incorrect usage of list append
-    numbers = [1, 2, 3, 4, 5]
-    numbers.append([6, 7, 8])
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-    # Hardcoded file path and not using context manager
-    result = read_file('data.txt')
-    print(result)
-
-    # Incorrectly calculated area
-    radius = 5
-    area = calculate_area(radius)
-    print(f"The area of the circle is: {area}")
-
-    # Inefficient way to find max in list
-    max_number = find_max_in_list(numbers)
-    print(f"The maximum number is: {max_number}")
-
-if __name__ == '__main__':
-    main()
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
