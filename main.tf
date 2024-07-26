@@ -13,7 +13,7 @@ resource "aws_instance" "example" {
 
 resource "aws_s3_bucket" "example" {
   bucket = "example-bucket"
-  acl    = "public"
+  acl    = "public-read"
 
   tags = {
     Name        = "example-bucket"
