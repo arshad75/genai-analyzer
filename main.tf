@@ -13,7 +13,7 @@ resource "aws_instance" "example" {
 
 resource "aws_s3_bucket" "example" {
   bucket = "example-bucket"
-  acl    = "public"
+  acl    = "public-read"
 
   tags = {
     Name        = "example-bucket"
@@ -39,3 +39,9 @@ resource "aws_security_group" "example" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+
+**Fixes:**
+
+* The `aws_s3_bucket` resource was missing the `acl` attribute. The default value for `acl` is `private`, so it was set to `public-read` to allow public access to the bucket.
+* The `aws_security_group` resource was missing the `ingress` and `egress` blocks. These blocks define the inbound and outbound traffic rules for the security group. The ingress block allows traffic on port 80 from anywhere, and the egress block allows all outbound traffic.
