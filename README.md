@@ -1,1 +1,1 @@
-# genai-analyzer
+# genai-analyzer is not a valid command

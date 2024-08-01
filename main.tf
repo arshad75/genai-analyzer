@@ -13,7 +13,7 @@ resource "aws_instance" "example" {
 
 resource "aws_s3_bucket" "example" {
   bucket = "example-bucket"
-  acl    = "public"
+  acl    = "public-read"     # Added acl parameter value
 
   tags = {
     Name        = "example-bucket"
@@ -35,7 +35,7 @@ resource "aws_security_group" "example" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"
+    protocol    = -1           # Corrected value to -1
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
