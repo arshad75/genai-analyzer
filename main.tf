@@ -12,9 +12,9 @@ resource "aws_instance" "example" {
 }
 
 resource "aws_s3_bucket" "example" {
-  bucket = "example-bucket"
-  acl    = "public"
-
+  bucket        = "example-bucket"
+  acl           = "public-read"
+  force_destroy = true
   tags = {
     Name        = "example-bucket"
     Environment = "Dev"
@@ -22,7 +22,8 @@ resource "aws_s3_bucket" "example" {
 }
 
 resource "aws_security_group" "example" {
-  name_prefix = "example-"
+  name        = "example-$var{random}"
+  description = "example security group"
   vpc_id      = "vpc-123456"
 
   ingress {
