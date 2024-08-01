@@ -1,3 +1,4 @@
+```
 provider "aws" {
   region = "us-west-2"
 }
@@ -13,7 +14,7 @@ resource "aws_instance" "example" {
 
 resource "aws_s3_bucket" "example" {
   bucket = "example-bucket"
-  acl    = "public"
+  acl    = "public-read"
 
   tags = {
     Name        = "example-bucket"
@@ -22,7 +23,8 @@ resource "aws_s3_bucket" "example" {
 }
 
 resource "aws_security_group" "example" {
-  name_prefix = "example-"
+  name        = "example-sg"
+  description = "Example security group"
   vpc_id      = "vpc-123456"
 
   ingress {
@@ -39,3 +41,24 @@ resource "aws_security_group" "example" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group_rule" "allow_ssh" {
+  type               = "ingress"
+  security_group_id = aws_security_group.example.id
+  protocol           = "tcp"
+  from_port          = 22
+  to_port            = 22
+  cidr_blocks        = ["0.0.0.0/0"]
+  description        = "Allow SSH access from anywhere"
+}
+
+resource "aws_security_group_rule" "allow_http" {
+  type               = "ingress"
+  security_group_id = aws_security_group.example.id
+  protocol           = "tcp"
+  from_port          = 80
+  to_port            = 80
+  cidr_blocks        = ["0.0.0.0/0"]
+  description        = "Allow HTTP access from anywhere"
+}
+```
