@@ -1,42 +1,54 @@
-import math
-
+```python
 def calculate_area(radius):
-    # Incorrect calculation of area
-    area = math.pi * radius ** 3
-    return area
+    if radius <= 0:
+        raise ValueError("Radius must be a positive number")
+    return math.pi * radius ** 2
+
 
 def find_max_in_list(lst):
-    # Using a manual loop to find max instead of built-in function
+    if not lst:
+        raise ValueError("List cannot be empty")
     max_val = lst[0]
-    for val in lst:
-        if val > max_val:
-            max_val = val
+    for num in lst:
+        if num > max_val:
+            max_val = num
     return max_val
 
+
 def read_file(file_path):
-    # Not handling file not found exception
-    file = open(file_path, 'r')
-    content = file.read()
-    file.close()
-    return content
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+        return content.strip()
+    except FileNotFoundError:
+        return "File not found"
+    except (PermissionError, UnicodeDecodeError):
+        return "Permission denied or could not decode the file"
+
 
 def main():
-    # Incorrect usage of list append
-    numbers = [1, 2, 3, 4, 5]
-    numbers.append([6, 7, 8])
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8]
 
-    # Hardcoded file path and not using context manager
     result = read_file('data.txt')
-    print(result)
+    if isinstance(result, str):
+        print(result)
+    else:
+        print(float(result))  # Convert the result to float for the calculation
 
-    # Incorrectly calculated area
-    radius = 5
-    area = calculate_area(radius)
-    print(f"The area of the circle is: {area}")
+    try:
+        radius = 5
+        area = calculate_area(radius)
+        print(f"The area of the circle is: {area}")
+    except ValueError as e:
+        print(e)
 
-    # Inefficient way to find max in list
-    max_number = find_max_in_list(numbers)
-    print(f"The maximum number is: {max_number}")
+    try:
+        max_number = find_max_in_list(numbers)
+        print(f"The maximum number is: {max_number}")
+    except ValueError as e:
+        print(e)
+
 
 if __name__ == '__main__':
     main()
+```
